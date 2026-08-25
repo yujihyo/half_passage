@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>문장 페어틀</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="preview-panel">
+      <div id="preview" class="quote-preview bg-pink" aria-label="문장 미리보기">
+        <div id="darkOverlay" class="dark-overlay"></div>
+
+        <div id="mainCopy" class="main-copy align-left">
+          <div id="text1Preview" class="text1">‘우리’.</div>
+          <div id="text2Preview" class="text2">이자헌 과장님이 소속된 파충류 외계인 집단이 나에게 사람의 모습을 취할 수 있는 무언가를 가져다주겠다고 했다.</div>
+          <div id="text3Preview" class="text3">괴담에 떨어져도 출근을 해야 하는구나</div>
+        </div>
+
+        <div id="text4Preview" class="text4">KAKAOPAGE</div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <section class="control-group">
+        <h2>배경</h2>
+        <div class="background-options">
+          <label class="upload-tile" title="사진 업로드">
+            <input id="imageInput" type="file" accept="image/*" hidden />
+            <span>＋</span>
+          </label>
+          <button class="bg-option photo-option hidden" id="photoOption" type="button" aria-label="업로드한 사진"></button>
+          <button class="bg-option gradient-pink selected" data-bg="pink" type="button" aria-label="빨강 그라데이션"></button>
+          <button class="bg-option gradient-pink2" data-bg="pink2" type="button" aria-label="분홍 그라데이션"></button>
+          <button class="bg-option gradient-green" data-bg="green" type="button" aria-label="초록 그라데이션"></button>
+          <button class="bg-option gradient-blue" data-bg="blue" type="button" aria-label="파랑 그라데이션"></button>
+          <button class="bg-option gradient-purple" data-bg="purple" type="button" aria-label="보라 그라데이션"></button>
+        </div>
+      </section>
+
+      <section class="control-group text-control">
+        <h2>글꼴</h2>
+        <div class="font-options">
+          <button class="font-option selected" data-font="gothic" type="button">고딕체</button>
+          <button class="font-option" data-font="serif" type="button">바탕체</button>
+          <button class="font-option" data-font="myeongjo" type="button">명조체</button>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <h2>글자 크기</h2>
+        <div class="size-control">
+          <button id="sizeMinus" class="round-button" type="button">−</button>
+          <strong id="sizeValue">1</strong>
+          <button id="sizePlus" class="round-button" type="button">＋</button>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <h2>글자색</h2>
+        <div class="color-options">
+          <button class="color-option white selected" data-color="white" type="button" aria-label="하양">A</button>
+          <button class="color-option black" data-color="black" type="button" aria-label="검정">A</button>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <h2>정렬</h2>
+        <div class="align-options">
+          <button class="align-option selected" data-align="left" type="button" aria-label="왼쪽 정렬"><span><i></i><i></i><i></i></span></button>
+          <button class="align-option" data-align="center" type="button" aria-label="중앙 정렬"><span><i></i><i></i><i></i></span></button>
+          <button class="align-option" data-align="right" type="button" aria-label="오른쪽 정렬"><span><i></i><i></i><i></i></span></button>
+        </div>
+      </section>
+
+      <section class="control-group toggle-row">
+        <h2>배경 어둡게</h2>
+        <button id="darkToggle" class="switch" type="button" aria-pressed="false"><span><i></i><i></i><i></i></span></button>
+      </section>
+
+      <section class="input-section">
+        <label>
+          <span>글 내용</span>
+          <textarea id="text1Input" rows="5">주절주절 여기에 멘트를 적을 수 있어요</textarea>
+        </label>
+        <label>
+          <span>작품명</span>
+          <input id="text2Input" type="text" value="제목or작품명" />
+        </label>
+        <label>
+          <span>작가 및 회차</span>
+          <input id="text3Input" type="text" value="작가명 Ⅰ 회차" />
+        </label>
+        <label>
+          <span>출처</span>
+          <input id="text4Input" type="text" value="관련 출처" />
+        </label>
+      </section>
+
+      <div class="actions">
+        <button id="cancelButton" class="cancel-button" type="button">취소</button>
+        <button id="saveButton" class="save-button" type="button">저장하기</button>
+      </div>
+    </aside>
+  </main>
+
+  <div id="cropModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="crop-dialog">
+      <header>
+        <h2>사진 자르기</h2>
+        <button id="cropClose" type="button" aria-label="닫기">×</button>
+      </header>
+      <div id="cropViewport" class="crop-viewport">
+        <img id="cropImage" alt="자르기 미리보기" />
+        <div class="crop-frame"></div>
+      </div>
+      <div class="crop-controls">
+        <button id="cropZoomMinus" type="button">−</button>
+        <input id="cropZoom" type="range" min="1" max="3" step="0.01" value="1" />
+        <button id="cropZoomPlus" type="button">＋</button>
+      </div>
+      <p>사진을 드래그해서 위치를 조절하세요.</p>
+      <div class="crop-actions">
+        <button id="cropCancel" type="button">취소</button>
+        <button id="cropConfirm" type="button">적용</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
