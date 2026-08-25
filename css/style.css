@@ -560,8 +560,9 @@ button {
 .crop-viewport {
   position: relative;
   width: min(78vw, 540px);
-  height: min(78vw, 540px);
-  max-height: 62vh;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  max-height: none;
   margin: auto;
   overflow: hidden;
   background: #000;
@@ -828,5 +829,6 @@ button {
   .crop-viewport {
     width: 82vw;
     height: 82vw;
+    aspect-ratio: 1 / 1;
   }
 }
