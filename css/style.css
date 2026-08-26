@@ -737,28 +737,30 @@ button {
 .round-button {
   width: 42px;
   height: 42px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
-  .color-options {
-    gap: 30px;
-  }
+.color-options {
+  margin-left: auto;
+  gap: 16px;
+}
 
-  .color-option {
-    width: 54px;
-    height: 54px;
-    font-size: 24px;
-  }
+.color-option {
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
+}
 
-  .align-options {
-    gap: 17px;
-  }
+.align-options {
+  margin-left: auto;
+  gap: 9px;
+}
 
-  .align-option {
-    width: 54px;
-    height: 54px;
-    border-radius: 13px;
-  }
+.align-option {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
 
   .toggle-row {
     margin-top: 6px;
@@ -822,19 +824,19 @@ button {
     font-size: 16px;
   }
 
-  .color-options {
-    gap: 24px;
-  }
+.color-options {
+  gap: 16px;
+}
 
-  .align-options {
-    gap: 10px;
-  }
+.align-options {
+  gap: 9px;
+}
 
-  .align-option,
-  .color-option {
-    width: 49px;
-    height: 49px;
-  }
+.align-option,
+.color-option {
+  width: 42px;
+  height: 42px;
+}
 
   .main-copy {
     left: 10%;
