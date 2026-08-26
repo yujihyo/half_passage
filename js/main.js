@@ -43,7 +43,7 @@ function updateText() {
   text1Preview.style.fontSize = `${sizeToPx(state.size)}px`;
   text2Preview.style.fontSize = "16px";
   text3Preview.style.fontSize = "13px";
-  text4Preview.style.fontSize = "16px";
+  text4Preview.style.fontSize = "9px";
 
   mainCopy.className = `main-copy align-${state.align}`;
   text1Preview.className = `text1 color-${state.color} font-${state.font}`;
