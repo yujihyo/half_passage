@@ -124,7 +124,7 @@ function layoutQuoteText() {
 function sizeToPx(size) {
   // PC
   if (window.innerWidth > 900) {
-    return [22, 26, 30, 34, 38][size - 1];
+    return [24, 28, 32, 36, 40][size - 1];
   }
 
   // 모바일
