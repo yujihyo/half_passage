@@ -393,10 +393,10 @@ document.getElementById("cropConfirm").addEventListener("click", () => {
 
 document.getElementById("cancelButton").addEventListener("click", () => {
   // Reset to the initial values without leaving the page.
-  text1Input.value = "‘우리’.\\n이자헌 과장님이 소속된 파충류 외계인 집단이 나에게 사람의 모습을 취할 수 있는 무언가를 가져다주겠다고 했다.";
-  text2Input.value = "괴담에 떨어져도 출근을 해야 하는구나";
-  text3Input.value = "백덕수 Ⅰ 괴담에 떨어져도 출근...해야 하는구나 269화 중";
-  text4Input.value = "KAKAOPAGE";
+  text1Input.value = "주절주절 여기에 멘트를 적을 수 있어요";
+  text2Input.value = "제목or작품명";
+  text3Input.value = "작가명 Ⅰ 회차";
+  text4Input.value = "관련 출처";
 
   state.background = "pink";
   state.photoData = "";
