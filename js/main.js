@@ -70,11 +70,12 @@ function updateText() {
   if (window.innerWidth > 900) {
     text2Preview.style.fontSize = "18px";
     text3Preview.style.fontSize = "15px";
+    text4Preview.style.fontSize = "11px";
   } else {
     text2Preview.style.fontSize = "13px";
     text3Preview.style.fontSize = "11px";
+    text4Preview.style.fontSize = "8px";
   }
-  text4Preview.style.fontSize = "11px";
 
   mainCopy.className = `main-copy align-${state.align}`;
   text1Preview.className = `text1 color-${state.color} font-${state.font}`;
