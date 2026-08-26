@@ -128,7 +128,7 @@ function sizeToPx(size) {
   }
 
   // 모바일
-  return [16, 19, 21, 24, 27][size - 1];
+  return [18, 21, 24, 27, 30][size - 1];
 }
 
 function setBackground(type) {
