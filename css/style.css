@@ -661,18 +661,21 @@ button {
     max-height: none;
   }
 
-  .sidebar {
-    order: 2;
-    position: relative;
-    inset: auto;
-    width: 100%;
-    overflow: visible;
-    padding: 20px 6vw 34px;
-  }
+.sidebar {
+  order: 2;
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: visible;
+  padding: 20px 6vw 34px;
+}
 
   .control-group {
     min-height: 67px;
     margin-bottom: 8px;
+    min-width: 0;
   }
 
   .control-group h2 {
@@ -687,17 +690,24 @@ button {
 
   /* Keep the original mobile UI sizing. The compact controls above are PC-only. */
 
-  .background-options {
-    gap: 12px;
-  }
+.background-options {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
 
-  .bg-option,
-  .upload-tile {
-    width: 54px;
-    height: 54px;
-    flex-basis: 54px;
-    border-radius: 16px;
-  }
+.bg-option,
+.upload-tile {
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 16px;
+}
 
   .upload-tile span {
     font-size: 38px;
@@ -776,17 +786,23 @@ button {
     padding-right: 6vw;
   }
 
- .background-options {
-    gap: 9px;
-  }
+.background-options {
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
 
-  .bg-option,
-  .upload-tile {
-    width: 49px;
-    height: 49px;
-    flex-basis: 49px;
-    border-radius: 14px;
-  }
+.bg-option,
+.upload-tile {
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 14px;
+}
 
   .font-options {
     gap: 15px;
