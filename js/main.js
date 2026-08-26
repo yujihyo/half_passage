@@ -72,7 +72,7 @@ function updateText() {
     text3Preview.style.fontSize = "15px";
   } else {
     text2Preview.style.fontSize = "13px";
-    text3Preview.style.fontSize = "10px";
+    text3Preview.style.fontSize = "11px";
   }
   text4Preview.style.fontSize = "11px";
 
