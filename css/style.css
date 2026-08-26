@@ -165,7 +165,7 @@ button {
   bottom: 3.6%;
   text-align: center;
   font-family: Arial, "Noto Sans KR", sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1;
   font-weight: 700;
   white-space: nowrap;
@@ -729,15 +729,16 @@ button {
     font-size: 18px;
   }
 
-  .size-control {
-    gap: 22px;
-  }
+.size-control {
+  margin-left: auto;
+  gap: 14px;
+}
 
-  .round-button {
-    width: 51px;
-    height: 51px;
-    font-size: 27px;
-  }
+.round-button {
+  width: 42px;
+  height: 42px;
+  font-size: 20px;
+}
 
   .color-options {
     gap: 30px;
@@ -843,7 +844,7 @@ button {
   }
 
   .text4 {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .crop-dialog {
