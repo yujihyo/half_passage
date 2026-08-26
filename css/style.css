@@ -721,9 +721,10 @@ button {
   transform: none;
 }
 
-  .font-options {
-    gap: 26px;
-  }
+.font-options {
+  margin-left: auto;
+  gap: 26px;
+}
 
   .font-option {
     font-size: 18px;
@@ -816,9 +817,10 @@ button {
   border-radius: 14px;
 }
 
-  .font-options {
-    gap: 15px;
-  }
+.font-options {
+  margin-left: auto;
+  gap: 15px;
+}
 
   .font-option {
     font-size: 16px;
