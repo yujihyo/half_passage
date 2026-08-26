@@ -29,6 +29,32 @@ const cropImage = document.getElementById("cropImage");
 const cropViewport = document.getElementById("cropViewport");
 const cropZoom = document.getElementById("cropZoom");
 
+const noticeModal =
+    document.getElementById("noticeModal");
+
+const noticeClose =
+    document.getElementById("noticeClose");
+
+const NOTICE_KEY = "halfpassage-notice";
+
+
+if (sessionStorage.getItem(NOTICE_KEY)) {
+
+    noticeModal.style.display = "none";
+
+}
+
+noticeClose.addEventListener("click", () => {
+
+    noticeModal.style.display = "none";
+
+    sessionStorage.setItem(
+        NOTICE_KEY,
+        "checked"
+    );
+
+});
+
 let cropImageInfo = null;
 let cropTransform = { x: 0, y: 0, scale: 1 };
 let dragging = false;

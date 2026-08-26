@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>문장 페어틀</title>
+  <title>웹소설 페어틀</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
+  <div id="noticeModal">
+    <div class="noticeBox">
+      <h2>주의사항</h2>
+      <p>
+        • <카카오페이지> 발췌 기능을 토대로 제작되었습니다.<br>
+        • 자작 발언 및 재배포 금지<br>
+        • 사용불가: <b>은혼 히지미츠 관련 드림</b>
+      </p>
+      <button id="noticeClose">
+        확인
+      </button>
+    </div>
+  </div>
   <main class="app">
     <section class="preview-panel">
       <div id="preview" class="quote-preview bg-pink" aria-label="문장 미리보기">
@@ -68,15 +83,19 @@
       <section class="control-group">
         <h2>정렬</h2>
         <div class="align-options">
-          <button class="align-option selected" data-align="left" type="button" aria-label="왼쪽 정렬"><span><i></i><i></i><i></i></span></button>
-          <button class="align-option" data-align="center" type="button" aria-label="중앙 정렬"><span><i></i><i></i><i></i></span></button>
-          <button class="align-option" data-align="right" type="button" aria-label="오른쪽 정렬"><span><i></i><i></i><i></i></span></button>
+          <button class="align-option selected" data-align="left" type="button"
+            aria-label="왼쪽 정렬"><span><i></i><i></i><i></i></span></button>
+          <button class="align-option" data-align="center" type="button"
+            aria-label="중앙 정렬"><span><i></i><i></i><i></i></span></button>
+          <button class="align-option" data-align="right" type="button"
+            aria-label="오른쪽 정렬"><span><i></i><i></i><i></i></span></button>
         </div>
       </section>
 
       <section class="control-group toggle-row">
         <h2>배경 어둡게</h2>
-        <button id="darkToggle" class="switch" type="button" aria-pressed="false"><span><i></i><i></i><i></i></span></button>
+        <button id="darkToggle" class="switch" type="button"
+          aria-pressed="false"><span><i></i><i></i><i></i></span></button>
       </section>
 
       <section class="input-section">
@@ -132,4 +151,5 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>
