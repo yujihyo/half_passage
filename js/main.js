@@ -30,28 +30,28 @@ const cropViewport = document.getElementById("cropViewport");
 const cropZoom = document.getElementById("cropZoom");
 
 const noticeModal =
-    document.getElementById("noticeModal");
+  document.getElementById("noticeModal");
 
 const noticeClose =
-    document.getElementById("noticeClose");
+  document.getElementById("noticeClose");
 
 const NOTICE_KEY = "halfpassage-notice";
 
 
 if (sessionStorage.getItem(NOTICE_KEY)) {
 
-    noticeModal.style.display = "none";
+  noticeModal.style.display = "none";
 
 }
 
 noticeClose.addEventListener("click", () => {
 
-    noticeModal.style.display = "none";
+  noticeModal.style.display = "none";
 
-    sessionStorage.setItem(
-        NOTICE_KEY,
-        "checked"
-    );
+  sessionStorage.setItem(
+    NOTICE_KEY,
+    "checked"
+  );
 
 });
 
@@ -67,8 +67,13 @@ function updateText() {
 
   // Only text1 changes with the size control. Text2~4 remain fixed.
   text1Preview.style.fontSize = `${sizeToPx(state.size)}px`;
-  text2Preview.style.fontSize = "16px";
-  text3Preview.style.fontSize = "13px";
+  if (window.innerWidth > 900) {
+    text2Preview.style.fontSize = "18px";
+    text3Preview.style.fontSize = "15px";
+  } else {
+    text2Preview.style.fontSize = "16px";
+    text3Preview.style.fontSize = "13px";
+  }
   text4Preview.style.fontSize = "11px";
 
   mainCopy.className = `main-copy align-${state.align}`;
