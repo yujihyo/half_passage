@@ -124,11 +124,11 @@ function layoutQuoteText() {
 function sizeToPx(size) {
   // PC
   if (window.innerWidth > 900) {
-    return [20, 24, 30, 36, 42][size - 1];
+    return [20, 24, 28, 32, 36][size - 1];
   }
 
   // 모바일
-  return [16, 19, 21, 24, 37][size - 1];
+  return [16, 19, 21, 24, 27][size - 1];
 }
 
 function setBackground(type) {
