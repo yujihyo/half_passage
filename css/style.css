@@ -709,9 +709,17 @@ button {
   border-radius: 16px;
 }
 
-  .upload-tile span {
-    font-size: 38px;
-  }
+.upload-tile span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 38px;
+  font-weight: 200;
+  line-height: 1;
+  transform: none;
+}
 
   .font-options {
     gap: 26px;
