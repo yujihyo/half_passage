@@ -548,15 +548,12 @@ document.getElementById("saveButton").addEventListener("click", async () => {
 
     const rect = preview.getBoundingClientRect();
 
-    /*
-     * 최종 저장 크기
-     *
-     * PC    : 기존 방식 유지
-     * 모바일 : 1600 × 1600
-     */
-    const outputSize = isMobile ? 1600 : Math.round(rect.width * 2);
+    const previewWidth = Math.floor(rect.width);
+    const previewHeight = Math.floor(rect.height);
 
-    const captureScale = outputSize / rect.width;
+    const outputSize = isMobile ? 1600 : previewWidth * 2;
+
+    const captureScale = outputSize / previewWidth;
 
     /*
      * 현재 사진 background를 임시로 제거합니다.
@@ -581,8 +578,8 @@ document.getElementById("saveButton").addEventListener("click", async () => {
      * 사진을 제외한 프리뷰를 캡처합니다.
      */
     const overlayCanvas = await html2canvas(preview, {
-      width: Math.ceil(rect.width),
-      height: Math.ceil(rect.height),
+      width: previewWidth,
+      height: previewHeight,
       scale: captureScale,
       useCORS: true,
       backgroundColor: null,
