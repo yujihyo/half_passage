@@ -63,7 +63,10 @@ let dragStart = null;
 function updateText() {
   text2Preview.textContent = text2Input.value || "";
   text3Preview.textContent = text3Input.value || "";
-  text4Preview.textContent = text4Input.value || "";
+  text4Preview.textContent =
+    /kakaopage/i.test(text4Input.value)
+      ? ""
+      : (text4Input.value || "");
 
   // Only text1 changes with the size control. Text2~4 remain fixed.
   text1Preview.style.fontSize = `${sizeToPx(state.size)}px`;
