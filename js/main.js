@@ -160,7 +160,7 @@ function sizeToPx(size) {
   }
 
   // 모바일
-  return [18, 21, 24, 27, 30][size - 1];
+  return [15, 18, 21, 24, 27][size - 1];
 }
 
 function setBackground(type) {
@@ -396,11 +396,15 @@ document.getElementById("cropConfirm").addEventListener("click", () => {
   if (!cropImageInfo) return;
 
   const output = document.createElement("canvas");
-  const size = 1200;
+  const size = 2400;
   output.width = size;
   output.height = size;
 
   const ctx = output.getContext("2d");
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+
   const { iw, ih, cover } = cropImageInfo;
   const vw = cropViewport.clientWidth;
   const vh = cropViewport.clientHeight;
@@ -411,7 +415,6 @@ document.getElementById("cropConfirm").addEventListener("click", () => {
   const left = (vw - width) / 2 + cropTransform.x;
   const top = (vh - height) / 2 + cropTransform.y;
 
-  // Map the visible square viewport to a 1200x1200 output.
   const factor = size / vw;
 
   ctx.drawImage(
@@ -422,7 +425,7 @@ document.getElementById("cropConfirm").addEventListener("click", () => {
     height * factor
   );
 
-  state.photoData = output.toDataURL("image/jpeg", 0.92);
+  state.photoData = output.toDataURL("image/png");
   photoOption.style.backgroundImage = `url("${state.photoData}")`;
   photoOption.classList.remove("hidden");
   setBackground("photo");
@@ -461,31 +464,288 @@ document.getElementById("cancelButton").addEventListener("click", () => {
 document.getElementById("saveButton").addEventListener("click", async () => {
   const button = document.getElementById("saveButton");
   const original = button.textContent;
+
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isMobile = window.innerWidth <= 900;
+
+  // 모바일 Safari 저장 전 확인
+  if (isIOS) {
+    const confirmed = confirm(
+      "이미지를 저장하시겠습니까?\n확인 시 저장 화면으로 이동합니다."
+    );
+
+    if (!confirmed) {
+      return;
+    }
+  }
+
   button.textContent = "저장 중…";
   button.disabled = true;
+
+  /*
+   * iOS Safari에서는 비동기 작업 이후 window.open()을 실행하면
+   * 팝업으로 인식되어 차단될 수 있습니다.
+   *
+   * 따라서 저장 버튼을 누른 순간 빈 창을 먼저 열어둡니다.
+   */
+  let iosWindow = null;
+
+  if (isIOS) {
+    iosWindow = window.open("", "_blank");
+
+    if (iosWindow) {
+      iosWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>이미지 저장</title>
+          <style>
+            html, body {
+              margin: 0;
+              padding: 0;
+              background: #000;
+              width: 100%;
+              min-height: 100%;
+            }
+
+            body {
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+            }
+
+            img {
+              display: block;
+              width: 100%;
+              height: auto;
+              max-width: 100%;
+            }
+          </style>
+        </head>
+        <body>
+          <p style="
+            color:white;
+            font-family:sans-serif;
+            text-align:center;
+            width:100%;
+            margin-top:40px;
+          ">
+            이미지 생성 중…
+          </p>
+        </body>
+        </html>
+      `);
+
+      iosWindow.document.close();
+    }
+  }
 
   try {
     if (typeof html2canvas !== "function") {
       throw new Error("html2canvas unavailable");
     }
 
-    const canvas = await html2canvas(preview, {
-      width: preview.clientWidth,
-      height: preview.clientHeight,
-      scale: 2,
+    const rect = preview.getBoundingClientRect();
+
+    /*
+     * 최종 저장 크기
+     *
+     * PC    : 기존 방식 유지
+     * 모바일 : 1600 × 1600
+     */
+    const outputSize = isMobile ? 1600 : Math.round(rect.width * 2);
+
+    const captureScale = outputSize / rect.width;
+
+    /*
+     * 현재 사진 background를 임시로 제거합니다.
+     *
+     * 중요:
+     * 사진 자체는 아래에서 직접 Canvas에 그립니다.
+     * html2canvas에는 텍스트/오버레이만 맡깁니다.
+     */
+    const originalBackgroundImage = preview.style.backgroundImage;
+    const originalBackgroundSize = preview.style.backgroundSize;
+    const originalBackgroundPosition = preview.style.backgroundPosition;
+
+    const hasPhoto =
+      state.background === "photo" &&
+      state.photoData;
+
+    if (hasPhoto) {
+      preview.style.backgroundImage = "none";
+    }
+
+    /*
+     * 사진을 제외한 프리뷰를 캡처합니다.
+     */
+    const overlayCanvas = await html2canvas(preview, {
+      width: Math.ceil(rect.width),
+      height: Math.ceil(rect.height),
+      scale: captureScale,
       useCORS: true,
       backgroundColor: null,
       logging: false
     });
 
-    const link = document.createElement("a");
-    link.download = "구절공유.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    /*
+     * 원래 프리뷰 상태 복원
+     */
+    preview.style.backgroundImage = originalBackgroundImage;
+    preview.style.backgroundSize = originalBackgroundSize;
+    preview.style.backgroundPosition = originalBackgroundPosition;
+
+    /*
+     * 최종 저장 Canvas
+     */
+    const output = document.createElement("canvas");
+    output.width = outputSize;
+    output.height = outputSize;
+
+    const ctx = output.getContext("2d");
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+
+    /*
+     * ------------------------------------------------
+     * 1. 사진을 직접 그립니다.
+     * ------------------------------------------------
+     */
+    if (hasPhoto) {
+      const photo = new Image();
+
+      await new Promise((resolve, reject) => {
+        photo.onload = resolve;
+        photo.onerror = reject;
+
+        /*
+         * state.photoData는 현재 2400×2400 PNG입니다.
+         */
+        photo.src = state.photoData;
+      });
+
+      /*
+       * 현재 사진은 이미 정사각형으로 잘려 있으므로
+       * 프리뷰 전체를 정확하게 덮습니다.
+       */
+      ctx.drawImage(
+        photo,
+        0,
+        0,
+        outputSize,
+        outputSize
+      );
+    }
+
+    /*
+     * ------------------------------------------------
+     * 2. 사진 위에 html2canvas 결과를 올립니다.
+     * ------------------------------------------------
+     */
+    ctx.drawImage(
+      overlayCanvas,
+      0,
+      0,
+      outputSize,
+      outputSize
+    );
+
+    /*
+     * 최종 PNG
+     */
+    const imageData = output.toDataURL("image/png");
+
+    /*
+     * ------------------------------------------------
+     * iOS Safari
+     * ------------------------------------------------
+     */
+    if (isIOS) {
+
+      if (iosWindow) {
+
+        iosWindow.document.open();
+
+        iosWindow.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+            <title>이미지 저장</title>
+
+            <style>
+              html,
+              body {
+                margin: 0;
+                padding: 0;
+                background: #000;
+                width: 100%;
+                min-height: 100%;
+              }
+
+              body {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+              }
+
+              img {
+                display: block;
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+              }
+            </style>
+          </head>
+
+          <body>
+            <img src="${imageData}" alt="저장할 이미지">
+          </body>
+          </html>
+        `);
+
+        iosWindow.document.close();
+
+      } else {
+
+        /*
+         * 팝업이 차단된 경우
+         */
+        alert(
+          "이미지를 열 수 없습니다.\n\n" +
+          "Safari의 팝업 차단이 켜져 있다면 팝업을 허용한 후 다시 시도해주세요."
+        );
+      }
+
+    } else {
+
+      /*
+       * PC / Android
+       */
+      const link = document.createElement("a");
+
+      link.download = "웹소설공유.png";
+      link.href = imageData;
+
+      link.click();
+    }
+
   } catch (error) {
+
     console.error(error);
+
+    if (iosWindow) {
+      iosWindow.close();
+    }
+
     alert("이미지를 저장하지 못했습니다.");
+
   } finally {
+
     button.textContent = original;
     button.disabled = false;
   }

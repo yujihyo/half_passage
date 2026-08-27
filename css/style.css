@@ -98,6 +98,8 @@ button {
 
 .quote-preview.has-photo {
   background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .dark-overlay {
@@ -166,7 +168,7 @@ button {
   text-align: center;
   font-family: Arial, "Noto Sans KR", sans-serif;
   font-size: 12px;
-  line-height: 1;
+  line-height: 1.2;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
@@ -850,6 +852,12 @@ button {
   .switch.on span {
     transform: translateX(31px);
   }
+
+  .text4 {
+    font-size: 8px;
+    overflow: visible;
+  }
+
  }
 
 @media (max-width: 560px) {
@@ -914,10 +922,6 @@ button {
     right: 10%;
     top: 20%;
     bottom: 17%;
-  }
-
-  .text4 {
-    font-size: 8px;
   }
 
   .crop-dialog {
