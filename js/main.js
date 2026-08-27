@@ -546,6 +546,19 @@ document.getElementById("saveButton").addEventListener("click", async () => {
       throw new Error("html2canvas unavailable");
     }
 
+    // 웹폰트 로딩 완료 대기
+    await document.fonts.ready;
+
+    // 현재 폰트 기준으로 텍스트 레이아웃 재계산
+    updateText();
+
+    // 레이아웃 반영 대기
+    await new Promise(resolve => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve);
+      });
+    });
+
     const rect = preview.getBoundingClientRect();
 
     /*
@@ -758,5 +771,7 @@ window.addEventListener("resize", () => {
   }
 });
 
-updateText();
-setBackground("pink");
+document.fonts.ready.then(() => {
+  updateText();
+  setBackground("pink");
+});
