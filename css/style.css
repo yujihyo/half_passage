@@ -126,9 +126,7 @@ button {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  font-family: "Noto Sans KR", sans-serif;
-  width: auto;
-  min-width: 0;
+  font-family: Arial, "Noto Sans KR", sans-serif;
 }
 
 .main-copy.align-left { text-align: left; }
@@ -141,11 +139,6 @@ button {
 }
 
 .text1 {
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-  font-synthesis: none;
-
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   line-height: 1.48;
@@ -186,7 +179,6 @@ button {
 .font-gothic {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 300;
-  font-synthesis: none;
 }
 
 .font-serif {
