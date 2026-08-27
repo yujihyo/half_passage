@@ -62,7 +62,10 @@ let dragStart = null;
 
 function updateText() {
   text2Preview.textContent = text2Input.value || "";
-  text3Preview.textContent = text3Input.value || "";
+  text3Preview.textContent =
+    /백덕수/i.test(text3Input.value)
+      ? ""
+      : (text3Input.value || "");
   text4Preview.textContent =
     /kakaopage/i.test(text4Input.value)
       ? ""
